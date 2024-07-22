@@ -1,4 +1,4 @@
-const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRvlNYK9gCagtlcyLXg67rMmWyaTSrjMMWMU-FjXaSorRFy3CCuKekhbWUcMjzrbKnVx_HVTQc_l3n2/pub?gid=0&single=true&output=csv'; // Replace with your published CSV link
+const CSV_URL = 'farmpriceraw.csv';
 
 async function fetchCSVData() {
     try {

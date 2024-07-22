@@ -3,43 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Sheets Data Display</title>
+    <title>Google Sheets Viewer</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-        }
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             background-color: #f4f4f4;
         }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
+        iframe {
+            border: none;
+            width: 100%;
+            height: 90vh;
         }
     </style>
 </head>
 <body>
-    <h1>Google Sheets Data Display</h1>
-    <table id="dataTable">
-        <thead>
-            <tr>
-                <th>Column A</th>
-                <th>Column B</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Data will be inserted here -->
-        </tbody>
-    </table>
-    
-    <script src="script.js"></script>
+    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRvlNYK9gCagtlcyLXg67rMmWyaTSrjMMWMU-FjXaSorRFy3CCuKekhbWUcMjzrbKnVx_HVTQc_l3n2/pubhtml?gid=0&single=true" allowfullscreen></iframe>
 </body>
 </html>

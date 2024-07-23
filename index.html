@@ -10,19 +10,111 @@
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             height: 100vh;
             background-color: #f4f4f4;
         }
+        .search-container {
+            width: 100%;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .search-box {
+            width: 50%;
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+        .search-box input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+        .search-box input[type="button"] {
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            border-left: none;
+            background-color: #5cb85c;
+            color: white;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
         iframe {
             border: none;
-            width: 100%;
-            height: 90vh;
+            width: 90%;
+            height: 80vh;
+            margin-top: 10px;
+        }
+        @media (min-width: 1200px) {
+            iframe {
+                width: 80%;
+            }
+        }
+        @media (min-width: 1500px) {
+            iframe {
+                width: 70%;
+            }
+        }
+        @media (max-width: 768px) {
+            iframe {
+                width: 100%;
+                height: 70vh;
+            }
+        }
+        @media (max-width: 480px) {
+            iframe {
+                width: 100%;
+                height: 60vh;
+            }
         }
     </style>
 </head>
 <body>
-    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRvlNYK9gCagtlcyLXg67rMmWyaTSrjMMWMU-FjXaSorRFy3CCuKekhbWUcMjzrbKnVx_HVTQc_l3n2/pubhtml?gid=0&single=true" allowfullscreen></iframe>
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search within page...">
+            <input type="button" value="Search" onclick="searchInIframe()">
+        </div>
+    </div>
+    <iframe id="sheetIframe" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRvlNYK9gCagtlcyLXg67rMmWyaTSrjMMWMU-FjXaSorRFy3CCuKekhbWUcMjzrbKnVx_HVTQc_l3n2/pubhtml?gid=0&single=true" allowfullscreen></iframe>
+
+    <script>
+        function searchInIframe() {
+            const input = document.getElementById('searchInput').value;
+            const iframe = document.getElementById('sheetIframe');
+            const innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+            const bodyText = innerDoc.body.innerHTML;
+            const searchExp = new RegExp(input, 'gi');
+            const matches = bodyText.match(searchExp);
+
+            // Remove previous highlights
+            innerDoc.body.innerHTML = innerDoc.body.innerHTML.replace(/<span class="highlight">|<\/span>/g, '');
+
+            if (matches) {
+                let newText = bodyText;
+                matches.forEach((match, index) => {
+                    newText = newText.replace(match, <span class="highlight" id="match-${index}">${match}</span>);
+                });
+                innerDoc.body.innerHTML = newText;
+
+                // Scroll to the first match
+                const firstMatch = innerDoc.getElementById('match-0');
+                if (firstMatch) {
+                    firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .highlight {
+            background-color: yellow;
+        }
+    </style>
 </body>
 </html>
